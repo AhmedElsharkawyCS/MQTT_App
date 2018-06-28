@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FF767975"
+    tools:context=".MainActivity">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="host Url"
+            android:id="@+id/hosturl"
+            android:inputType="textEmailAddress"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/cientid_c"
+            android:hint="Client ID"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/port"
+            android:hint="Port"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Connect"
+            android:id="@+id/connct"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/disconnected"
+            android:text="Disconnect"
+            android:layout_marginTop="10dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@android:color/holo_green_dark"
+        android:layout_marginTop="30dp">
+
+        <EditText
+            android:id="@+id/publish_topic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Your Topic" />
+        <CheckBox
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Retain"
+            android:id="@+id/retain"
+            android:textSize="20dp"/>
+        <EditText
+            android:id="@+id/publish_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Add Your Message" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/publish_button"
+            android:text="Publish"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:background="@android:color/holo_blue_dark"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/sub_topic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Add Topic" />
+
+        <EditText
+            android:id="@+id/sub_qos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Add QOS priority (0 or 1 or 2)"
+            android:inputType="number" />
+
+        <Button
+            android:id="@+id/sub_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Subscribe" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="40dp"
+        android:background="#16f0f0"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/ubsbscribe_topic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Unsubscribe Topic" />
+
+        <Button
+            android:id="@+id/ubsbscribe_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Unsubscribe" />
+    </LinearLayout>
+
+</LinearLayout>
+
+</ScrollView>
