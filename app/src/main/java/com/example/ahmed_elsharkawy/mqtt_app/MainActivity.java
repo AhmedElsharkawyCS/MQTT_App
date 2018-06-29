@@ -1,5 +1,10 @@
 package com.example.ahmed_elsharkawy.mqtt_app;
 
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Intent;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -7,11 +12,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.QuickContactBadge;
 import android.widget.Toast;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
+import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
+import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
@@ -24,6 +32,10 @@ public class MainActivity extends AppCompatActivity {
    private Button connect_button,publish_button,sub_button,disconButton,unsbscribeButton;
     private EditText port,clientId,Url,publish_topic,publish_message,sub_topic,qos,unsbscribe_topic;
     private CheckBox publish_retain;
+    private NotificationCompat.Builder mBuilder;
+    private NotificationManagerCompat notificationManager;
+    private Intent intent;
+    private static final int notificationId=456178;
 
 
     @Override
@@ -32,15 +44,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView (R.layout.activity_main);
 
         //get reference of items
-
+         intent = new Intent(this,MainActivity.class);
         //connection
         connect_button=(Button)findViewById (R.id.connct);
         port=(EditText)findViewById (R.id.port);
         clientId=(EditText)findViewById (R.id.cientid_c);
         Url=(EditText)findViewById (R.id.hosturl);
         clientId.setText ( MqttClient.generateClientId());
-        Url.setText ("tcp://broker.hivemq.com");
-        port.setText ("1883");
+        Url.setText ("mqtt://m12.cloudmqtt.com");
+        port.setText ("15149 ");
         final String get_portNum=port.getText ().toString ().trim ();
         final String get_server_url=Url.getText ().toString ().trim ();
         final String get_clientId=clientId.getText ().toString ();
@@ -62,6 +74,12 @@ public class MainActivity extends AppCompatActivity {
         //unsubscribe
         unsbscribeButton=(Button)findViewById (R.id.ubsbscribe_button);
         unsbscribe_topic=(EditText)findViewById (R.id.ubsbscribe_topic);
+
+
+        //create notification object
+         mBuilder = new NotificationCompat.Builder(this);
+         notificationManager = NotificationManagerCompat.from(this);
+
 
         //prepare connection
         final MqttAndroidClient client_con =
@@ -186,6 +204,38 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText (getBaseContext ()," The subscription could not be performed",Toast.LENGTH_SHORT).show ();
                 }
             });
+
+            client.setCallback (new MqttCallback ( ) {
+                @Override
+                public void connectionLost(Throwable cause) {
+
+                }
+
+                @Override
+                public void messageArrived(String topic, MqttMessage message) throws Exception {
+
+                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                 PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext (), 0, intent,PendingIntent.FLAG_UPDATE_CURRENT);
+
+                 mBuilder.setSmallIcon (R.drawable.ic_notifications_black_24dp);
+                 mBuilder.setWhen (System.currentTimeMillis ());
+                 mBuilder.setContentTitle (topic);
+                 mBuilder.setContentText ( new String (message.getPayload ()));
+                 mBuilder.setPriority (NotificationCompat.PRIORITY_DEFAULT);
+                 mBuilder.setContentIntent (pendingIntent);
+                 mBuilder.setAutoCancel (true);
+
+                 notificationManager.notify(notificationId, mBuilder.build());
+
+
+
+                }
+
+                @Override
+                public void deliveryComplete(IMqttDeliveryToken token) {
+
+                }
+            });
         } catch (MqttException e) {
             e.printStackTrace();
         }
@@ -237,6 +287,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
     }
     }
+
 
 
 }
