@@ -1,0 +1,2 @@
+# MQTT_App
+ there are some problems i met during the establishment of this app 1# the most prominent is the exit or not abe to the programe to continue when  you run or work admired the topic particular but can solve this usint  tray and catch statement 2#formating of url Server should be like (mqtt://name:password@server.com:port) 3# alsothere was a prolem is not to keep the conductivity continuous but have been resolved ths through the create a client object in onCreate function and send the object as a parameter
