@@ -86,6 +86,9 @@ public class MainActivity extends AppCompatActivity {
                 new MqttAndroidClient(getBaseContext (), get_server_url+":"+get_portNum,
                         get_clientId);
 
+
+
+
         //end preparation
 
         //set action of connection button
